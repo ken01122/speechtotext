@@ -47,7 +47,7 @@ def get_large_audio_transcription(path):
                               # keep the silence for 1 second, adjustable as well
                               keep_silence=200,
                               )
-    folder_name = "audio-chunks"
+    folder_name = f"C:\\Users\\{username}\\Desktop\\project\\audio-chunks"
     sec = 0
     fulltext = ""
     # create a directory to store the audio chunks
