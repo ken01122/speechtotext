@@ -3,9 +3,10 @@ import os
 from pydub import AudioSegment
 from pydub.silence import split_on_silence, detect_nonsilent
 
+username = os.getlogin()
 path = "C:\\Users\\Ken\\Desktop\\project\\speech2text\\01.wav"
-write = 'C:\\Users\\Ken\\Desktop\\project\\speech2text\\output.txt'
-f = open(write, 'w')
+write = f"C:\\Users\\{username}\\Desktop\\project\\speech2text\\output.txt"
+f = open(write, "w")
 
 
 # adjust target amplitude
@@ -23,9 +24,6 @@ print("音訊長度={} seconds".format(len(normalized_sound) / 1000))
 f.write("音訊長度={} seconds".format(len(normalized_sound) / 1000) + "\n")
 # Print detected non-silent chunks, which in our case would be spoken words.
 nonsilent_data = detect_nonsilent(normalized_sound, min_silence_len=500, silence_thresh=-20, seek_step=1)
-
-# convert ms to seconds
-
 
 # create a speech recognition object
 r = sr.Recognizer()
@@ -51,6 +49,7 @@ def get_large_audio_transcription(path):
                               )
     folder_name = "audio-chunks"
     sec = 0
+    fulltext = ""
     # create a directory to store the audio chunks
     if not os.path.isdir(folder_name):
         os.mkdir(folder_name)
@@ -70,13 +69,14 @@ def get_large_audio_transcription(path):
                 text = "can not recognize"
             else:
                 text = f"{text.capitalize()}. "
-            print([nonsilent_data[sec][0] / 1000, nonsilent_data[sec][1] / 1000], end=" ")
-            f.write(str([nonsilent_data[sec][0] / 1000, nonsilent_data[sec][1] / 1000]))
+            timestamp = [nonsilent_data[sec][0] / 1000, nonsilent_data[sec][1] / 1000]
+            fulltext += str(timestamp) + text + "\n"
+            print(timestamp, end=" ")
+            f.write(str(timestamp) + " ")
             print(text)
             f.write(text + "\n")
-            f.write("\n")
             sec += 1
     f.close
-    # return the text for all chunks detected
+
 
 get_large_audio_transcription(path)
