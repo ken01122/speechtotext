@@ -4,8 +4,8 @@ from pydub import AudioSegment
 from pydub.silence import split_on_silence, detect_nonsilent
 
 username = os.getlogin()
-path = "C:\\Users\\Ken\\Desktop\\project\\speech2text\\01.wav"
-write = f"C:\\Users\\{username}\\Desktop\\project\\speech2text\\output.txt"
+path = "E:\\project\\speech2text\\02.wav"
+write = f"E:\\project\\speech2text"
 f = open(write, "w")
 
 
@@ -47,7 +47,7 @@ def get_large_audio_transcription(path):
                               # keep the silence for 1 second, adjustable as well
                               keep_silence=200,
                               )
-    folder_name = f"C:\\Users\\{username}\\Desktop\\project\\audio-chunks"
+    folder_name = f"E:\\project\\audio-chunks"
     sec = 0
     fulltext = ""
     # create a directory to store the audio chunks
@@ -77,6 +77,7 @@ def get_large_audio_transcription(path):
             f.write(text + "\n")
             sec += 1
     f.close
+
 
 
 get_large_audio_transcription(path)
