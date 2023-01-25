@@ -6,7 +6,7 @@ import shutil
 
 
 def speed_change(sound, speed=1.0):
-    rate = sound.spawn(sound.raw_data, overrides={
+    rate = sound._spawn(sound.raw_data, overrides={
         "frame_rate": int(sound.frame_rate * speed)
       })
     return rate.set_frame_rate(sound.frame_rate)
@@ -35,7 +35,7 @@ def get_large_audio_transcription(path, filename):
                               keep_silence=200,
                               seek_step=1
                               )
-    folder_name = f"E:\\project\\speech2text\\audio-chunks"
+    folder_name = f"C:\\Users\\Ken\\pythonProject\\audio-chunks"
 
     r = sr.Recognizer()
     # create a directory to store the audio chunks
@@ -44,7 +44,7 @@ def get_large_audio_transcription(path, filename):
     else:
         shutil.rmtree(folder_name)  # 刪除音檔分割資料夾以刪除分割音檔
         os.mkdir(folder_name)
-    f = open(fr'E:\project\speech2text\text\{filename}.txt', "w", encoding='UTF-8')
+    f = open(fr'C:\Users\Ken\pythonProject\text\{filename}.txt', "w", encoding='UTF-8')
     # process each chunk
     for i, audio_chunk in enumerate(chunks, start=1):
         # export audio chunk and save it in
@@ -63,13 +63,12 @@ def get_large_audio_transcription(path, filename):
                 text = ""
             else:
                 text = f"{text.capitalize()}"
-            print(text)
             f.write(text)
     f.close
 
 
-for info in os.listdir(r'E:\project\speech2text\wav'):
-    domain = os.path.abspath(r'E:\project\speech2text\wav') #獲取資料夾的路徑，此處其實沒必要這麼寫，目的是為了熟悉os的資料夾操作
+for info in os.listdir(r'C:\Users\Ken\pythonProject\wav'):
+    domain = os.path.abspath(r'C:\Users\Ken\pythonProject\wav') #獲取資料夾的路徑，此處其實沒必要這麼寫，目的是為了熟悉os的資料夾操作
     path = os.path.join(domain, info) #將路徑與檔名結合起來就是每個檔案的完整路徑
     filename = os.path.splitext(info)[0]
     get_large_audio_transcription(path, filename)
