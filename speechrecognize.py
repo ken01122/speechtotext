@@ -35,7 +35,7 @@ def get_large_audio_transcription(path, filename):
                               keep_silence=200,
                               seek_step=1
                               )
-    folder_name = f"C:\\Users\\Ken\\pythonProject\\audio-chunks"
+    folder_name = f"audio-chunks"
 
     r = sr.Recognizer()
     # create a directory to store the audio chunks
@@ -44,7 +44,7 @@ def get_large_audio_transcription(path, filename):
     else:
         shutil.rmtree(folder_name)  # 刪除音檔分割資料夾以刪除分割音檔
         os.mkdir(folder_name)
-    f = open(fr'C:\Users\Ken\pythonProject\text\{filename}.txt', "w", encoding='UTF-8')
+    f = open(fr'text\{filename}.txt', "w", encoding='UTF-8')
     # process each chunk
     for i, audio_chunk in enumerate(chunks, start=1):
         # export audio chunk and save it in
@@ -59,7 +59,7 @@ def get_large_audio_transcription(path, filename):
             try:
                 text = r.recognize_google(audio_listened, language="zh-TW") + "\n"
             except sr.UnknownValueError as e:
-                print("can not recognize", end="")
+                # print("can not recognize", end="")
                 text = ""
             else:
                 text = f"{text.capitalize()}"
@@ -67,9 +67,9 @@ def get_large_audio_transcription(path, filename):
     f.close
 
 
-for info in os.listdir(r'C:\Users\Ken\pythonProject\wav'):
-    domain = os.path.abspath(r'C:\Users\Ken\pythonProject\wav') #獲取資料夾的路徑，此處其實沒必要這麼寫，目的是為了熟悉os的資料夾操作
-    path = os.path.join(domain, info) #將路徑與檔名結合起來就是每個檔案的完整路徑
+for info in os.listdir(r'wav'):
+    domain = os.path.abspath(r'wav')
+    path = os.path.join(domain, info)
     filename = os.path.splitext(info)[0]
     get_large_audio_transcription(path, filename)
 
